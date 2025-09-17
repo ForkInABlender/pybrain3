@@ -18,6 +18,7 @@ from scipy import where, array, exp, zeros, size, mat
 from functools import reduce
 
 
+file=open
 """
 
 The one line above is to correct for limitations of python2.7 & python3+.
