@@ -17,6 +17,18 @@ from random import random, choice
 from scipy import where, array, exp, zeros, size, mat
 from functools import reduce
 
+
+"""
+
+The one line above is to correct for limitations of python2.7 & python3+.
+ Given that `file` does not exist in python3.*+, open must be treated as `file` for the time being.
+ This same correction works for cellphones utilizing the same codebase.
+ This makes it possible to save and reload your datasets with minimal effort.
+ By that same token, pyodide installs using pybrain3 require this "monkey-patch" to also make use of this in the browser. 
+
+        -- Dylan Kenneth Eliot
+"""
+
 # file extension for load/save protocol mapping
 known_extensions = {
     'mat': 'matlab',
@@ -194,7 +206,7 @@ class Serializable(object):
         if format is None:
             # try to derive protocol from file extension
             format = formatFromExtension(filename)
-        with file(filename, 'rbU') as fp:
+        with file(filename, 'rb') as fp:
             obj = cls.loadFromFileLike(fp, format)
             obj.filename = filename
             return obj
